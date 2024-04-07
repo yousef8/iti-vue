@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      .container-lg {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: space-around;
+      }
+      a {
+        cursor: pointer;
+      }
+      .less {
+        color: red;
+      }
+
+      .more {
+        color: green;
+      }
+    </style>
+    <title>Library</title>
+  </head>
+  <body>
+    <div id="root-app">
+      <!-- NavBar -->
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" @click="showLibrary()">Library</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  @click="showWishList()"
+                  >WishList</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- App -->
+      <div class="container-lg p-4" v-if="!isWishListVisible">
+        <div class="card" style="width: 18rem" v-for="book in books">
+          <img :src="book.imageLink" class="card-img-top" alt="book cover" />
+          <div class="card-body">
+            <h5 class="card-title">{{book.title}}</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Author : </b> {{book.author}}</li>
+            <li
+              :class="[book.pages < 300 ? 'less' : 'more', 'list-group-item']"
+            >
+              <b>No. Pages :</b> {{book.pages}}
+            </li>
+            <li class="list-group-item">
+              <b>Price : </b> {{formatPrice(book.price)}}
+            </li>
+          </ul>
+          <div class="card-body">
+            <a
+              class="card-link"
+              @click="addToWishList(book)"
+              v-if="!isBookInWishList(book)"
+              >Add to WishList</a
+            >
+            <a class="card-link" v-else>Added to wish list</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-lg" id="wish-list" v-if="isWishListVisible">
+        <h1 v-if="booksWished.size <= 0">Empty wish list</h1>
+        <table class="table" v-else>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Category</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="book in booksWished">
+              <td>{{book.id}}</td>
+              <td>{{book.title}}</td>
+              <td>{{book.author}}</td>
+              <td>{{book.category}}</td>
+              <td>{{book.price}}</td>
+              <td><a @click="removeFromWishList(book)">Remove</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
