@@ -12,8 +12,8 @@
     ></book-card>
   </div>
 
-  <div vi-if="isWishListVisible">
-    <h1 v-for="book in wishedBooks" :key="book.id">{{ book.title }}</h1>
+  <div v-if="isWishListVisible" class="container-lg p-4 d-flex flex-wrap justify-content-around">
+    <wish-list :wishedBooks="wishedBooks" @remove-from-wishlist="removeFromWishList"></wish-list>
   </div>
 </template>
 
@@ -21,9 +21,10 @@
 import books from './assets/books.json'
 import BookCard from './components/BookCard.vue'
 import NavBar from './components/NavBar.vue'
+import WishList from './components/WishList.vue'
 
 export default {
-  components: { BookCard, NavBar },
+  components: { BookCard, NavBar, WishList },
   data() {
     return {
       books: books,
