@@ -11,12 +11,14 @@
       </li>
       <li class="list-group-item"><b>Price : </b> {{ book.price }}</li>
     </ul>
-    <!-- <div class="card-body">
-      <a class="card-link" @click="addToWishList(book)" v-if="!isBookInWishList(book)"
+    <div class="card-body">
+      <a class="card-link" @click="$emit('add-to-wishlist', book.id)" v-if="!isWished"
         >Add to WishList</a
       >
-      <a class="card-link" v-else>Added to wish list</a>
-    </div> -->
+      <a class="card-link" @click="$emit('remove-from-wishlist', book.id)" v-else
+        >Remove wish list</a
+      >
+    </div>
   </div>
 </template>
 
@@ -35,7 +37,12 @@ export default {
       id: Number,
       price: Number,
       required: true
+    },
+    isWished: {
+      type: Boolean,
+      required: true
     }
-  }
+  },
+  emits: ['add-book-to-wishlist', 'remove-from-wishlist']
 }
 </script>
