@@ -1,17 +1,11 @@
 <template>
   <nav-bar :showLibrary="showLibrary" :showWishList="showWishList"></nav-bar>
-  <!-- App -->
-  <div v-if="!isWishListVisible" class="container-lg p-4 d-flex flex-wrap justify-content-around">
-    <book-card
-      :book="book"
-      :isWished="isBookInWishList(book)"
-      v-for="book in books"
-      :key="book.id"
-      @add-to-wishlist="addToWishList"
-      @remove-from-wishlist="removeFromWishList"
-    ></book-card>
-  </div>
-
+  <BookLibrary
+    v-if="!isWishListVisible"
+    :is-book-in-wish-list="isBookInWishList"
+    @add-to-wishlist="addToWishList"
+    @remove-from-wishlist="removeFromWishList"
+  />
   <div v-if="isWishListVisible" class="container-lg p-4 d-flex flex-wrap justify-content-around">
     <wish-list :wishedBooks="wishedBooks" @remove-from-wishlist="removeFromWishList"></wish-list>
   </div>
@@ -19,12 +13,12 @@
 
 <script>
 import books from './assets/books.json'
-import BookCard from './components/BookCard.vue'
 import NavBar from './components/NavBar.vue'
 import WishList from './components/WishList.vue'
+import BookLibrary from './pages/BookLibrary.vue'
 
 export default {
-  components: { BookCard, NavBar, WishList },
+  components: { NavBar, WishList, BookLibrary },
   data() {
     return {
       books: books,
