@@ -12,37 +12,38 @@
       <li class="list-group-item"><b>Price : </b> {{ book.price }}</li>
     </ul>
     <div class="card-body">
-      <a class="card-link" @click="$emit('add-to-wishlist', book.id)" v-if="!isWished"
+      <a
+        class="card-link"
+        @click="wishesStore.addToWishes(book.id)"
+        v-if="!wishesStore.isWished(book)"
         >Add to WishList</a
       >
-      <a class="card-link" @click="$emit('remove-from-wishlist', book.id)" v-else
+      <a class="card-link" @click="wishesStore.removeFromWishes(book.id)" v-else
         >Remove wish list</a
       >
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    book: {
-      author: String,
-      country: String,
-      imageLink: String,
-      language: String,
-      link: String,
-      pages: Number,
-      title: String,
-      year: Number,
-      id: Number,
-      price: Number,
-      required: true
-    },
-    isWished: {
-      type: Boolean,
-      required: true
-    }
-  },
-  emits: ['add-book-to-wishlist', 'remove-from-wishlist']
-}
+<script setup>
+import { useWishesStore } from '@/stores/wishesStore'
+
+const wishesStore = useWishesStore()
+
+defineProps({
+  book: {
+    type: Object,
+    author: String,
+    country: String,
+    imageLink: String,
+    language: String,
+    link: String,
+    pages: Number,
+    title: String,
+    year: Number,
+    id: Number,
+    price: Number,
+    required: true
+  }
+})
 </script>

@@ -10,23 +10,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="book in wishedBooks" :key="book.id">
+      <tr v-for="book in wishesStore.wishes" :key="book.id">
         <td>{{ book.id }}</td>
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>{{ book.category }}</td>
         <td>{{ book.price }}</td>
-        <td><a @click="$emit('remove-from-wishlist', book.id)">Remove</a></td>
+        <td><a @click="wishesStore.removeFromWishes(book.id)">Remove</a></td>
       </tr>
     </tbody>
   </table>
 </template>
 
-<script>
-export default {
-  props: {
-    wishedBooks: Array
-  },
-  emits: ['remove-from-wishlist']
-}
+<script setup>
+import { useWishesStore } from '@/stores/wishesStore'
+const wishesStore = useWishesStore()
 </script>
