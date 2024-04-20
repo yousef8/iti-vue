@@ -9,7 +9,7 @@
 <script>
 import books from './assets/books.json'
 import NavBar from './components/NavBar.vue'
-import WishList from './components/WishList.vue'
+import WishList from './pages/WishList.vue'
 import BookLibrary from './pages/BookLibrary.vue'
 import { useWishesStore } from './stores/wishesStore'
 
